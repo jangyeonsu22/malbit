@@ -88,6 +88,7 @@
 
   <script>
     async function callGeminiAPI(prompt) {
+      console.log("📡 fetch 시작");
       const response = await fetch('https://malbit-api.vercel.app/api/gemini', {
         method: 'POST',
         headers: {
@@ -102,6 +103,7 @@
         })
       });
       const data = await response.json();
+      console.log("📩 응답 수신", data);
       return data.result;
     }
 
@@ -109,6 +111,8 @@
       const text = document.getElementById('inputText').value.trim();
       const style = document.getElementById('toneStyle').value;
       const useAI = document.getElementById('useAdvanced').checked;
+
+      console.log("🟡 버튼 클릭됨", { text, style, useAI });
 
       if (!text) {
         alert('문장을 입력해주세요.');
@@ -118,11 +122,14 @@
       let output = '';
       if (useAI) {
         try {
+          console.log("✅ 고급 변환 시도 중");
           output = await callGeminiAPI(`다음 문장을 ${style}한 말투로 바꿔줘: ${text}`);
         } catch (err) {
+          console.log("❌ 고급 변환 실패", err);
           output = '고급 변환 중 오류 발생';
         }
       } else {
+        console.log("✅ 기본 변환 사용");
         output = text.replace(/줘$/, '주시면 감사하겠습니다');
       }
 
