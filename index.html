@@ -66,18 +66,6 @@
       min-height: 100px;
       resize: vertical;
     }
-    .checkbox-group {
-      display: flex;
-      align-items: center;
-      margin-bottom: 16px;
-      padding: 8px;
-      background: #fdf6f8;
-      border-radius: 8px;
-    }
-    .checkbox-group input {
-      width: auto;
-      margin-right: 8px;
-    }
     .btn {
       background: linear-gradient(135deg, #d3929b, #ad7da0);
       color: white;
@@ -124,10 +112,9 @@
       margin-top: 16px;
     }
     .feedback-section {
-      display: none;
+      display: flex;
       flex-direction: column;
       align-items: flex-start;
-      margin-top: 16px;
     }
     .feedback-buttons {
       display: flex;
@@ -196,74 +183,53 @@
       background-color: #f4dbd3;
     }
     .history-item {
-      padding: 12px;
-      background: #fff;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      border: 1px solid #f4dbd3;
-      font-size: 14px;
-      transition: all 0.3s ease;
-    }
-    .history-item:hover {
-      border-color: #d3929b;
-      transform: translateX(2px);
-    }
-    .save-favorite-btn {
-      background-color: #fff;
-      border: 2px solid #d3929b;
-      color: #ad7da0;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .save-favorite-btn:hover {
-      background-color: #fdf6f8;
-      transform: translateY(-1px);
-    }
-    .diagnostic {
-      margin-top: 24px;
-      padding: 20px;
-      background-color: #fdf6f8;
-      border: 2px solid #f4dbd3;
-      border-radius: 12px;
-    }
-    .meter {
-      height: 10px;
-      background-color: #fff;
-      border-radius: 5px;
-      margin-bottom: 16px;
-      overflow: hidden;
-      border: 1px solid #f4dbd3;
-    }
-    .meter-fill {
-      height: 100%;
-      border-radius: 5px;
-      transition: width 0.5s ease;
-    }
-    .meter-label {
       display: flex;
       justify-content: space-between;
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 6px;
-    }
-    .suggestions {
-      background-color: #fff;
+      align-items: center;
       padding: 16px;
-      border-radius: 10px;
+      background: #fff;
+      border-radius: 8px;
+      margin-bottom: 12px;
       border: 1px solid #f4dbd3;
-      margin-top: 16px;
-      font-size: 14px;
     }
-    .advanced-options {
-      background-color: #fdf6f8;
-      border: 2px solid #f4dbd3;
+    .history-content {
+      flex: 1;
+    }
+    .history-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .delete-history {
+      background: none;
+      border: none;
+      color: #f87171;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+    .delete-history:hover {
+      background: #fee2e2;
+    }
+    .premium-feature {
+      background: #fdf6f8;
       border-radius: 12px;
       padding: 20px;
-      margin-bottom: 24px;
+      margin-top: 24px;
+      border: 2px solid #f4dbd3;
+    }
+    .premium-feature-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .remaining-count {
+      background: #d3929b;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 14px;
     }
     .input-section {
       display: flex;
@@ -272,7 +238,6 @@
       gap: 24px;
       margin-bottom: 32px;
     }
-    
     .situation-target-group {
       display: flex;
       gap: 40px;
@@ -280,11 +245,9 @@
       max-width: 300px;
       margin: 0 auto;
     }
-
     .situation-target-group > div {
       flex: 1;
     }
-
     .situation-target-group input {
       width: 100%;
       padding: 8px 12px;
@@ -295,18 +258,20 @@
       transition: all 0.3s ease;
       height: 36px;
     }
-
     .situation-target-group input:focus {
       outline: none;
       border-color: #d3929b;
       box-shadow: 0 0 0 3px rgba(211, 146, 155, 0.1);
     }
-
     .text-input-group {
       width: 100%;
       max-width: 600px;
+      display: flex;
+      gap: 20px;
     }
-
+    .text-input-group > div {
+      flex: 1;
+    }
     .favorites-section {
       margin-top: 16px;
       padding: 16px;
@@ -314,14 +279,12 @@
       border-radius: 12px;
       border: 2px solid #f4dbd3;
     }
-
     .favorites-list {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
       margin-top: 8px;
     }
-
     .favorite-item {
       background: white;
       border: 1px solid #d3929b;
@@ -330,104 +293,25 @@
       font-size: 13px;
       cursor: pointer;
       transition: all 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
     }
-
     .favorite-item:hover {
       background: #fdf6f8;
       transform: translateY(-1px);
     }
-
-    .history-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px;
-      background: #fff;
-      border-radius: 8px;
-      margin-bottom: 12px;
-      border: 1px solid #f4dbd3;
-    }
-
-    .history-content {
-      flex: 1;
-    }
-
-    .history-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .delete-history {
+    .favorite-delete {
       background: none;
       border: none;
-      color: #f87171;
+      color: #d3929b;
       cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 4px;
-      transition: all 0.3s ease;
-    }
-
-    .delete-history:hover {
-      background: #fee2e2;
-    }
-
-    .premium-feature {
-      background: #fdf6f8;
-      border-radius: 12px;
-      padding: 16px;
-      margin-top: 16px;
-    }
-
-    .premium-feature-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .remaining-count {
-      background: #d3929b;
-      color: white;
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 13px;
-    }
-
-    .style-example {
-      font-size: 13px;
-      color: #666;
-      margin-top: 4px;
-      font-style: italic;
-    }
-
-    .style-description {
-      font-size: 13px;
-      color: #666;
-      margin-top: 8px;
-      padding: 8px;
-      background: white;
-      border-radius: 8px;
-      border: 1px solid #f4dbd3;
-    }
-    
-    .style-description ul {
-      margin: 4px 0;
-      padding-left: 20px;
-    }
-    
-    .style-description li {
-      margin: 2px 0;
-    }
-
-    .premium-feature-header label strong {
+      padding: 0 4px;
       font-size: 16px;
-      color: #ad7da0;
     }
-
-    .feedback-message {
-      font-size: 12px;
-      color: #666;
-      margin-top: 4px;
+    .favorite-delete:hover {
+      color: #c17f88;
     }
   </style>
 </head>
@@ -463,44 +347,46 @@
         </div>
 
         <div class="text-input-group">
-          <label>텍스트:</label>
-          <textarea id="inputText" placeholder="예: 내일까지 보고서 줘" required>내일까지 보고서 줘</textarea>
-        </div>
-      </div>
-
-      <div>
-        <button type="button" id="toggleAdvanced" style="border: none; background: none; color: #ad7da0; font-size: 14px; padding: 8px 0; margin-bottom: 12px; cursor: pointer; font-weight: 500;" onclick="toggleAdvancedOptions()">
-          말투 스타일 변경 ▼
-        </button>
-      </div>
-      
-      <div class="advanced-options" style="display: none;">
-        <div style="margin-bottom: 16px;">
-          <label>말투 스타일:</label>
-          <select id="toneStyle">
-            <option value="polite">공손하고 친절</option>
-            <option value="business">비즈니스 격식</option>
-            <option value="rude">싸가지</option>
-            <option value="firm" selected>단호하지만 정중</option>
-          </select>
-          <div class="style-description" id="styleDescription">
-            <!-- 말투 스타일 설명이 여기에 동적으로 추가됩니다 -->
+          <div style="flex: 1;">
+            <label>말투 스타일:</label>
+            <select id="toneStyle">
+              <option value="polite">공손하고 친절</option>
+              <option value="business">비즈니스 격식</option>
+              <option value="rude">싸가지</option>
+              <option value="firm" selected>단호하지만 정중</option>
+            </select>
+          </div>
+          <div style="flex: 2;">
+            <label>텍스트:</label>
+            <textarea id="inputText" placeholder="예: 내일까지 보고서 줘" required>내일까지 보고서 줘</textarea>
           </div>
         </div>
       </div>
-      
+
       <div class="premium-feature">
         <div class="premium-feature-header">
-          <label for="useAdvanced" style="margin: 0">
-            <strong>고급 변환</strong>
-            <div style="font-size: 13px; color: #666;">AI 기반 맞춤형 문장 업그레이드 (무료 5회)</div>
+          <label for="useAdvanced" style="margin: 0; display: flex; align-items: center; gap: 8px;">
+            <input type="checkbox" id="useAdvanced" style="width: 20px; height: 20px; margin: 0;">
+            <strong style="font-size: 18px; color: #ad7da0;">고급 변환</strong>
           </label>
           <span class="remaining-count" id="remainingCount">남은 횟수: 5/5</span>
         </div>
-        <input type="checkbox" id="useAdvanced" style="margin-top: 8px;">
+        <div style="font-size: 13px; color: #666; margin-top: 8px;">AI 기반 맞춤형 문장 업그레이드 (무료 5회)</div>
+        
+        <div style="margin-top: 16px;">
+          <label>응답 길이:</label>
+          <select id="responseLength">
+            <option value="20">20자 이내 (매우 간단)</option>
+            <option value="50">50자 이내 (간단)</option>
+            <option value="100" selected>100자 이내 (보통)</option>
+            <option value="200">200자 이내 (자세히)</option>
+            <option value="500">500자 이내 (상세)</option>
+            <option value="1000">1000자 이내 (매우 상세)</option>
+          </select>
+        </div>
       </div>
       
-      <button type="button" class="btn" id="transformButton" onclick="transformText()">예쁜 말 변환</button>
+      <button type="button" class="btn" id="transformButton">예쁜 말 변환</button>
     </div>
     
     <div class="loading" style="display: none;">
@@ -518,410 +404,331 @@
             <button class="vote-btn">👍 좋아요</button>
             <button class="vote-btn">👎 별로예요</button>
           </div>
-          <span class="feedback-message">
+          <span style="font-size: 12px; color: #666;">
             사용자 피드백을 통해 더 나은 맞춤형 변환 서비스로 개선됩니다
           </span>
         </div>
-        <div style="display: flex; gap: 8px;">
-          <button class="copy-btn">결과 복사</button>
-        </div>
+        <button class="copy-btn">결과 복사하기</button>
       </div>
     </div>
     
-    <div class="diagnostic" style="display: none;">
-      <h3>말투 진단 결과:</h3>
-      
-      <div>
-        <div class="meter-label">
-          <span>직설성</span>
-          <span>70%</span>
-        </div>
-        <div class="meter">
-          <div class="meter-fill" style="width: 70%; background-color: #d3929b;"></div>
-        </div>
-      </div>
-      
-      <div>
-        <div class="meter-label">
-          <span>정중함</span>
-          <span>20%</span>
-        </div>
-        <div class="meter">
-          <div class="meter-fill" style="width: 20%; background-color: #4ade80;"></div>
-        </div>
-      </div>
-      
-      <div>
-        <div class="meter-label">
-          <span>오해 위험도</span>
-          <span>50%</span>
-        </div>
-        <div class="meter">
-          <div class="meter-fill" style="width: 50%; background-color: #f87171;"></div>
-        </div>
-      </div>
-      
-      <div class="suggestions">
-        <p style="font-weight: 500; margin-top: 0; margin-bottom: 8px">개선 제안:</p>
-        <ul style="margin: 0; padding-left: 20px">
-          <li>직설적인 표현이 다소 강합니다. 요청할 때는 부드러운 표현을 고려해보세요.</li>
-          <li>정중함이 부족할 수 있습니다. 존칭이나 부탁 표현을 추가해보세요.</li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="history-section">
+    <div class="history-section" style="display: none;">
       <div class="history-header">
         <h3>최근 변환 기록</h3>
-        <button class="clear-history" id="clearHistory" onclick="clearHistory()">전체 삭제</button>
+        <button class="clear-history" id="clearHistory">전체 삭제</button>
       </div>
       <div id="historyList"></div>
     </div>
   </div>
 
   <script>
-    const API_KEY = '여기에_API_키_입력';
+    // API 키 설정
+    const API_KEY = process.env.GEMINI_API_KEY || '';
     
-    // 어색한 변환 방지 규칙
-    const isBanCombination = (ending, addOn) => {
-      const banned = {
-        "줘": ["바랍니다", "하겠습니다", "하지만", "다만"],
-        "해": ["바랍니다", "하겠습니다", "하지만", "다만"],
-        "좀": ["바랍니다", "하겠습니다", "하지만", "다만"],
-        "요청": ["바랍니다", "하겠습니다", "하지만", "다만"],
-        "부탁": ["바랍니다", "하겠습니다", "하지만", "다만"]
-      };
-      return banned[ending]?.includes(addOn);
-    };
+    // API 키 유효성 검사
+    if (!API_KEY) {
+      console.error('API 키가 설정되지 않았습니다.');
+      document.getElementById('useAdvanced').disabled = true;
+      document.getElementById('useAdvanced').parentElement.innerHTML += 
+        '<div style="color: #f87171; font-size: 13px; margin-top: 8px;">API 키가 설정되지 않아 고급 변환을 사용할 수 없습니다.</div>';
+    }
+    
+    // AI 호출 함수
+    async function callGeminiAPI(prompt) {
+      try {
+        console.log('API 호출 시작:', prompt);
+        const response = await fetch('https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=' + API_KEY, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{
+                text: prompt
+              }]
+            }],
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 2000,
+              topP: 0.8,
+              topK: 40
+            }
+          })
+        });
 
-    const hasTrailingConjunction = (sentence) => {
-      return /(하지만|다만)\s*$/.test(sentence);
-    };
-
-    const isAwkward = (sentence) => {
-      return (
-        sentence.includes("줘 바랍니다") ||
-        sentence.includes("줘 하겠습니다") ||
-        sentence.includes("줘 하지만") ||
-        sentence.includes("줘 다만") ||
-        sentence.includes("해 바랍니다") ||
-        sentence.includes("해 하겠습니다") ||
-        sentence.includes("해 하지만") ||
-        sentence.includes("해 다만") ||
-        hasTrailingConjunction(sentence)
-      );
-    };
-
-    // 동사 치환 사전
-    const verbReplacements = {
-      "줘": ["제출", "전달", "공유"],
-      "해": ["수행", "진행", "처리"],
-      "말해": ["말씀", "전달"],
-      "확인해": ["확인", "검토"],
-      "적어": ["작성", "기입"]
-    };
-
-    // 금지된 조합
-    const bannedCombinations = [
-      "주시다 좀 주세요",
-      "주시다 부탁드립니다",
-      "주시다 하겠습니다",
-      "주시다 하지만",
-      "주시다 다만",
-      "주시다 꼭 부탁드립니다",
-      "제출 좀 주세요",
-      "검토 좀 주세요",
-      "작성 좀 주세요",
-      "전달 좀 주세요",
-      "공유 좀 주세요"
-    ];
-
-    // 명사 → 동사구 치환 맵
-    const nounToVerbMap = {
-      "제출": "제출해",
-      "검토": "검토해",
-      "작성": "작성해",
-      "전달": "전달해",
-      "공유": "공유해"
-    };
-
-    // 어색한 문장 수정 함수
-    function fixAwkwardSentence(sentence) {
-      for (const [noun, verb] of Object.entries(nounToVerbMap)) {
-        if (sentence.includes(noun + " 좀 주세요")) {
-          return sentence.replace(noun + " 좀 주세요", verb + " 주세요");
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('API 오류 응답:', errorData);
+          throw new Error(`API 응답 오류: ${response.status} - ${errorData.error?.message || '알 수 없는 오류'}`);
         }
-      }
-      return sentence;
-    }
 
-    function isInvalidPhrase(sentence) {
-      return bannedCombinations.some(phrase => sentence.includes(phrase));
-    }
+        const data = await response.json();
+        console.log('API 응답:', data);
 
-    // 동사 치환 함수
-    function replaceVerb(text) {
-      let result = text;
-      Object.entries(verbReplacements).forEach(([key, replacements]) => {
-        if (result.includes(key)) {
-          const randomReplacement = replacements[Math.floor(Math.random() * replacements.length)];
-          result = result.replace(key, randomReplacement);
+        if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
+          throw new Error('API 응답 형식 오류');
         }
-      });
-      return result;
+
+        const result = data.candidates[0].content.parts[0].text.trim();
+        console.log('변환 결과:', result);
+        return result;
+      } catch (error) {
+        console.error('API 호출 에러:', error);
+        throw new Error(`변환 중 오류가 발생했습니다: ${error.message}`);
+      }
     }
 
-    // 사용자 피드백을 저장할 객체
-    const userFeedback = {
-      polite: { good: [], bad: [] },
-      business: { good: [], bad: [] },
-      firm: { good: [], bad: [] },
-      rude: { good: [], bad: [] }
-    };
+    // 변환 함수
+    async function transformSentence(text, style) {
+      const situation = document.getElementById('situation').value;
+      const target = document.getElementById('target').value;
+      const maxLength = parseInt(document.getElementById('responseLength').value);
+      
+      const prompt = `당신은 전문적인 한국어 변환 전문가입니다. 
+      다음 문장을 ${style}한 어조로 변환해주세요.
 
-    // 피드백 저장 함수
-    function saveFeedback(style, template, isGood) {
-      if (isGood) {
-        userFeedback[style].good.push(template);
-      } else {
-        userFeedback[style].bad.push(template);
+      [요청사항]
+      1. 원문의 의미는 유지하면서 말투만 변경해주세요.
+      2. 응답은 반드시 ${maxLength}자 이내로 작성해주세요.
+      3. ${situation}에서 ${target}에게 하는 말이라는 점을 고려해주세요.
+      4. 다음 요소들을 포함해주세요:
+         - 간단한 이유나 배경 설명
+         - 구체적인 시간이나 기한
+         - 필요한 경우 추가적인 요청사항
+         - 감사나 배려의 표현
+      5. 존댓말과 예의를 갖춘 표현을 사용해주세요.
+      6. 자연스러운 문장 흐름을 유지해주세요.
+
+      [원문]
+      "${text}"
+
+      [변환 예시]
+      원문: "내일까지 보고서 줘"
+      변환: "내일까지 보고서를 제출해 주시면 감사드리겠습니다. 현재 프로젝트 마감일이 다가오고 있어서, 오후 3시까지 제출해 주시면 좋겠습니다. 보고서에는 진행 현황과 주요 이슈 사항을 포함해 주세요."`;
+      
+      try {
+        console.log('변환 시작:', { text, style, situation, target, maxLength });
+        const transformedText = await callGeminiAPI(prompt);
+        console.log('변환 완료:', transformedText);
+        return transformedText;
+      } catch (error) {
+        console.error('변환 실패:', error);
+        throw error;
       }
-      // 로컬 스토리지에 저장
-      localStorage.setItem('userFeedback', JSON.stringify(userFeedback));
     }
 
-    // 템플릿 선택 함수 (피드백 반영)
-    function selectTemplate(style, templates) {
-      const feedback = JSON.parse(localStorage.getItem('userFeedback') || '{}')[style] || { good: [], bad: [] };
-      
-      // 좋은 피드백이 있는 템플릿 우선 선택
-      const goodTemplates = templates.filter(t => feedback.good.includes(t));
-      if (goodTemplates.length > 0) {
-        return goodTemplates[Math.floor(Math.random() * goodTemplates.length)];
-      }
-      
-      // 나쁜 피드백이 없는 템플릿 중에서 선택
-      const neutralTemplates = templates.filter(t => !feedback.bad.includes(t));
-      if (neutralTemplates.length > 0) {
-        return neutralTemplates[Math.floor(Math.random() * neutralTemplates.length)];
-      }
-      
-      // 모든 템플릿이 나쁜 피드백을 받았다면 랜덤 선택
-      return templates[Math.floor(Math.random() * templates.length)];
-    }
-
-    // 말투 스타일별 변환 규칙
+    // 말투 스타일 규칙
     const styleRules = {
       polite: {
         name: '공손하고 친절',
-        templates: [
-          "혹시 {task}해 주실 수 있을까요?",
-          "{task}해 주시면 감사하겠습니다",
-          "{task}해 주시면 정말 도움이 될 것 같아요",
-          "{task}, 부탁드려도 괜찮을까요?"
-        ],
-        transform: (text, isRetry = false) => {
-          let task = text.replace(/[^가-힣\s]+$/g, '').trim();
-          task = replaceVerb(task);
-
-          if (isRetry) {
-            const selectedTemplate = selectTemplate(style, styleRules[style].templates);
-            let result = selectedTemplate.replace("{task}", task);
-            
-            while (isInvalidPhrase(result)) {
-              result = selectTemplate(style, styleRules[style].templates).replace("{task}", task);
-            }
-            result = fixAwkwardSentence(result);
-            return result;
-          } else {
-            return `혹시 ${task}해 주실 수 있을까요?`;
-          }
+        transform: (text) => {
+          return text.replace(/줘$/g, '주시면 감사하겠습니다')
+                    .replace(/해$/g, '해주시면 감사드리겠습니다')
+                    .replace(/^(.*)(해|줘|좀|요청|부탁)$/g, '혹시 $1해주실 수 있을까요?');
         }
       },
       business: {
         name: '비즈니스 격식',
-        templates: [
-          "{task} 부탁드립니다",
-          "{task}해 주시기 바랍니다",
-          "{task}에 대해 회신 부탁드립니다",
-          "{task}을 검토 후 회신 주시기 바랍니다"
-        ],
-        transform: (text, isRetry = false) => {
-          let task = text.replace(/[^가-힣\s]+$/g, '').trim();
-          task = replaceVerb(task);
-
-          if (isRetry) {
-            const selectedTemplate = selectTemplate(style, styleRules[style].templates);
-            let result = selectedTemplate.replace("{task}", task);
-            
-            while (isInvalidPhrase(result)) {
-              result = selectTemplate(style, styleRules[style].templates).replace("{task}", task);
-            }
-            result = fixAwkwardSentence(result);
-            return result;
-          } else {
-            return `${task} 부탁드립니다`;
-          }
-        }
-      },
-      firm: {
-        name: '단호하지만 정중',
-        templates: [
-          "죄송하지만, {task}해 주셔야 합니다",
-          "{task}은(는) 반드시 필요합니다",
-          "{task}가 누락되면 진행이 어렵습니다",
-          "{task} 부탁드립니다. 다만 일정이 어려우시면 말씀 주세요",
-          "{task}은 정책상 필수입니다"
-        ],
-        transform: (text, isRetry = false) => {
-          let task = text.replace(/[^가-힣\s]+$/g, '').trim();
-          task = replaceVerb(task);
-
-          if (isRetry) {
-            const selectedTemplate = selectTemplate(style, styleRules[style].templates);
-            let result = selectedTemplate.replace("{task}", task);
-            
-            while (isInvalidPhrase(result)) {
-              result = selectTemplate(style, styleRules[style].templates).replace("{task}", task);
-            }
-            result = fixAwkwardSentence(result);
-            return result;
-          } else {
-            return `죄송하지만, ${task}해 주셔야 합니다`;
-          }
+        transform: (text) => {
+          return text.replace(/줘$/g, '전달 부탁드립니다')
+                    .replace(/해$/g, '진행하도록 하겠습니다')
+                    .replace(/^(.*)(해|줘|좀|요청|부탁)$/g, '$1 검토 후 회신 부탁드립니다');
         }
       },
       rude: {
         name: '싸가지',
-        templates: [
-          "{task} 좀 주세요",
-          "{task} 주시죠",
-          "{task} 안 되면 곤란해요",
-          "그냥 {task} 주세요",
-          "{task} 되는 거죠?",
-          "{task} 못 하시진 않겠죠?",
-          "아직도 {task} 안 된 건 아니죠?",
-          "{task} 좀 해주세요",
-          "{task} 좀 해주시죠",
-          "{task} 좀 해주시면 안 될까요?"
-        ],
-        transform: (text, isRetry = false) => {
-          let task = text.replace(/[^가-힣\s]+$/g, '').trim();
-          task = replaceVerb(task);
-
-          if (isRetry) {
-            const selectedTemplate = selectTemplate(style, styleRules[style].templates);
-            let result = selectedTemplate.replace("{task}", task);
-            
-            // 어색한 조합 검사 및 수정
-            while (isInvalidPhrase(result)) {
-              result = selectTemplate(style, styleRules[style].templates).replace("{task}", task);
-            }
-            result = fixAwkwardSentence(result);
-            return result;
-          } else {
-            return `${task} 좀 주세요`;
-          }
+        transform: (text) => {
+          return text.replace(/줘$/g, '줘봐, 얼마나 걸리는데?')
+                    .replace(/해$/g, '해봐, 뭐가 그리 어려워?')
+                    .replace(/^(.*)(해|줘|좀|요청|부탁)$/g, '$1 당연히 해야 되는 거 아님?');
+        }
+      },
+      firm: {
+        name: '단호하지만 정중',
+        transform: (text) => {
+          return text.replace(/줘$/g, '전달 바랍니다')
+                    .replace(/해$/g, '진행해주시기 바랍니다')
+                    .replace(/^(.*)(해|줘|좀|요청|부탁)$/g, '$1 반드시 필요한 사항이오니 협조 부탁드립니다');
         }
       }
     };
 
-    async function transformWithGPT(text, style) {
-      if (!API_KEY) {
-        alert('GPT API 키가 설정되지 않았습니다.');
-        return text;
-      }
-
-      try {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${API_KEY}`
-          },
-          body: JSON.stringify({
-            model: 'gpt-3.5-turbo',
-            messages: [{
-              role: 'system',
-              content: `당신은 문장을 ${styleRules[style].name} 말투로 변환하는 전문가입니다. 
-              다음 규칙을 따라주세요:
-              - ${JSON.stringify(styleRules[style].rules)}
-              - 원문의 의미는 유지하면서 말투만 변경해주세요.
-              - 응답은 최소 2줄 이상으로 작성해주세요.
-              - 더 공손하고 상세하게 표현해주세요.`
-            }, {
-              role: 'user',
-              content: text
-            }],
-            temperature: 0.7
-          })
-        });
-
-        const data = await response.json();
-        return data.choices[0].message.content;
-      } catch (error) {
-        console.error('GPT API 호출 중 오류:', error);
-        return styleRules[style].transform(text);
-      }
-    }
-
-    // 전역 함수로 변환 함수 추가
-    async function transformText() {
-      console.log('변환 버튼 클릭됨');
-      const inputText = document.getElementById('inputText').value;
-      const selectedStyle = document.getElementById('toneStyle').value;
-      const useAdvanced = document.getElementById('useAdvanced');
-      const remainingCount = document.getElementById('remainingCount');
+    // 페이지 로드 시 초기화
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('페이지 로드 완료');
+      
+      // 남은 횟수 초기화
       let premiumUsageCount = 5;
-      
-      document.querySelector('.loading').style.display = 'block';
-      document.querySelector('.result').style.display = 'none';
-      document.querySelector('.diagnostic').style.display = 'none';
-
-      let transformedText;
-      if (useAdvanced && useAdvanced.checked) {
-        if (premiumUsageCount <= 0) {
-          alert('무료 사용 횟수를 모두 소진하셨습니다.');
-          document.querySelector('.loading').style.display = 'none';
-          return;
-        }
-        premiumUsageCount--;
+      const remainingCount = document.getElementById('remainingCount');
+      if (remainingCount) {
         remainingCount.textContent = `남은 횟수: ${premiumUsageCount}/5`;
-        
-        transformedText = await transformWithGPT(inputText, selectedStyle);
-      } else {
-        transformedText = styleRules[selectedStyle].transform(inputText);
       }
 
-      setTimeout(() => {
-        document.querySelector('.loading').style.display = 'none';
-        document.querySelector('.result').style.display = 'block';
-        document.querySelector('.diagnostic').style.display = 'block';
-        document.querySelector('.history-section').style.display = 'block';
-
-        document.querySelector('.result p').textContent = transformedText;
+      // 즐겨찾기 목록 로드
+      function loadFavorites() {
+        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        const favoritesList = document.getElementById('favoritesList');
+        favoritesList.innerHTML = '';
         
-        // 고급 변환 시에만 피드백 버튼과 문구 표시
-        const feedbackSection = document.querySelector('.feedback-section');
-        if (useAdvanced && useAdvanced.checked) {
-          feedbackSection.style.display = 'flex';
-        } else {
-          feedbackSection.style.display = 'none';
-        }
-        
-        addToHistory(inputText, transformedText, selectedStyle);
-      }, 1500);
-    }
+        favorites.forEach((favorite, index) => {
+          const favoriteItem = document.createElement('div');
+          favoriteItem.className = 'favorite-item';
+          
+          const content = document.createElement('span');
+          content.textContent = `${favorite.situation} - ${favorite.target}`;
+          content.onclick = function() {
+            document.getElementById('situation').value = favorite.situation;
+            document.getElementById('target').value = favorite.target;
+          };
+          
+          const deleteBtn = document.createElement('button');
+          deleteBtn.className = 'favorite-delete';
+          deleteBtn.textContent = '×';
+          deleteBtn.onclick = function(e) {
+            e.stopPropagation();
+            favorites.splice(index, 1);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            loadFavorites();
+          };
+          
+          favoriteItem.appendChild(content);
+          favoriteItem.appendChild(deleteBtn);
+          favoritesList.appendChild(favoriteItem);
+        });
+      }
 
-    // 고급 옵션 토글 함수 추가
-    function toggleAdvancedOptions() {
-      const advancedOptions = document.querySelector('.advanced-options');
-      const toggleButton = document.getElementById('toggleAdvanced');
-      const isHidden = advancedOptions.style.display === 'none';
-      
-      advancedOptions.style.display = isHidden ? 'block' : 'none';
-      toggleButton.textContent = isHidden ? '말투 스타일 변경 ▲' : '말투 스타일 변경 ▼';
-    }
+      // 초기 즐겨찾기 로드
+      loadFavorites();
+
+      // 즐겨찾기 저장
+      const saveFavorite = document.getElementById('saveFavorite');
+      if (saveFavorite) {
+        saveFavorite.addEventListener('click', function() {
+          const situation = document.getElementById('situation').value.trim();
+          const target = document.getElementById('target').value.trim();
+          
+          if (situation && target) {
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const isDuplicate = favorites.some(f => 
+              f.situation === situation && f.target === target
+            );
+            
+            if (!isDuplicate) {
+              favorites.push({ situation, target });
+              localStorage.setItem('favorites', JSON.stringify(favorites));
+              loadFavorites();
+              alert('즐겨찾기에 저장되었습니다.');
+            } else {
+              alert('이미 저장된 조합입니다.');
+            }
+          } else {
+            alert('상황과 대상을 모두 입력해주세요.');
+          }
+        });
+      }
+
+      // 고급 변환 체크박스 이벤트
+      const useAdvanced = document.getElementById('useAdvanced');
+      if (useAdvanced) {
+        useAdvanced.addEventListener('change', function() {
+          if (this.checked && premiumUsageCount <= 0) {
+            alert('무료 사용 횟수를 모두 소진하셨습니다.');
+            this.checked = false;
+          }
+        });
+      }
+
+      // 변환 버튼
+      const transformButton = document.getElementById('transformButton');
+      if (transformButton) {
+        transformButton.addEventListener('click', async function() {
+          console.log('변환 버튼 클릭됨');
+          const inputText = document.getElementById('inputText').value.trim();
+          const selectedStyle = document.getElementById('toneStyle').value;
+          const useAdvanced = document.getElementById('useAdvanced');
+          
+          if (!inputText) {
+            alert('변환할 문장을 입력해주세요.');
+            return;
+          }
+
+          document.querySelector('.loading').style.display = 'block';
+          document.querySelector('.result').style.display = 'none';
+          document.querySelector('.diagnostic').style.display = 'none';
+
+          try {
+            let transformedText;
+            if (useAdvanced && useAdvanced.checked) {
+              console.log('AI 변환 사용');
+              if (premiumUsageCount <= 0) {
+                alert('무료 사용 횟수를 모두 소진하셨습니다.');
+                document.querySelector('.loading').style.display = 'none';
+                return;
+              }
+              
+              // AI 변환 실행
+              transformedText = await transformSentence(inputText, selectedStyle);
+              console.log('AI 변환 결과:', transformedText);
+              
+              // 횟수 차감
+              premiumUsageCount--;
+              remainingCount.textContent = `남은 횟수: ${premiumUsageCount}/5`;
+            } else {
+              console.log('기본 변환 사용');
+              transformedText = styleRules[selectedStyle].transform(inputText);
+              console.log('기본 변환 결과:', transformedText);
+            }
+
+            setTimeout(() => {
+              document.querySelector('.loading').style.display = 'none';
+              document.querySelector('.result').style.display = 'block';
+              document.querySelector('.diagnostic').style.display = 'block';
+              document.querySelector('.history-section').style.display = 'block';
+
+              document.querySelector('.result p').textContent = transformedText;
+              addToHistory(inputText, transformedText, selectedStyle);
+            }, 1500);
+          } catch (error) {
+            console.error('변환 중 오류:', error);
+            document.querySelector('.loading').style.display = 'none';
+            alert('변환 중 오류가 발생했습니다.');
+          }
+        });
+      }
+
+      // 복사 버튼
+      const copyBtn = document.querySelector('.copy-btn');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', async function() {
+          const resultText = document.querySelector('.result p').textContent;
+          try {
+            await navigator.clipboard.writeText(resultText);
+            alert('복사되었습니다!');
+          } catch (err) {
+            alert('복사하기에 실패했습니다.');
+          }
+        });
+      }
+
+      // 피드백 버튼
+      document.querySelectorAll('.vote-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          const isLike = this.textContent.includes('좋아요');
+          alert(isLike ? '좋아요 감사합니다!' : '피드백 감사합니다.');
+        });
+      });
+
+      // 기록 삭제
+      const clearHistoryBtn = document.getElementById('clearHistory');
+      if (clearHistoryBtn) {
+        clearHistoryBtn.addEventListener('click', function() {
+          const historyList = document.getElementById('historyList');
+          historyList.innerHTML = '';
+          document.querySelector('.history-section').style.display = 'none';
+        });
+      }
+    });
 
     // 기록 추가 함수
     function addToHistory(originalText, transformedText, style) {
@@ -929,26 +736,23 @@
       const historyItem = document.createElement('div');
       historyItem.className = 'history-item';
       
-      const content = document.createElement('div');
-      content.className = 'history-content';
-      content.innerHTML = `
-        <div><strong>원문:</strong> ${originalText}</div>
-        <div><strong>변환:</strong> ${transformedText}</div>
-        <div style="color: #666; font-size: 12px;">스타일: ${styleRules[style].name}</div>
+      historyItem.innerHTML = `
+        <div class="history-content">
+          <div><strong>원문:</strong> ${originalText}</div>
+          <div><strong>변환:</strong> ${transformedText}</div>
+          <div style="color: #666; font-size: 12px;">스타일: ${styleRules[style].name}</div>
+        </div>
+        <div class="history-actions">
+          <button class="delete-history">삭제</button>
+        </div>
       `;
       
-      const actions = document.createElement('div');
-      actions.className = 'history-actions';
-      const deleteBtn = document.createElement('button');
-      deleteBtn.className = 'delete-history';
-      deleteBtn.textContent = '삭제';
-      deleteBtn.onclick = function() {
+      historyItem.querySelector('.delete-history').addEventListener('click', function() {
         historyList.removeChild(historyItem);
-      };
-      
-      actions.appendChild(deleteBtn);
-      historyItem.appendChild(content);
-      historyItem.appendChild(actions);
+        if (historyList.children.length === 0) {
+          document.querySelector('.history-section').style.display = 'none';
+        }
+      });
       
       if (historyList.children.length >= 5) {
         historyList.removeChild(historyList.lastChild);
@@ -956,264 +760,6 @@
       
       historyList.insertBefore(historyItem, historyList.firstChild);
     }
-
-    // 전체 기록 삭제 함수
-    function clearHistory() {
-      const historyList = document.getElementById('historyList');
-      historyList.innerHTML = '';
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('DOM이 로드되었습니다.');
-
-      const form = document.getElementById('transformForm');
-      const loading = document.querySelector('.loading');
-      const result = document.querySelector('.result');
-      const diagnostic = document.querySelector('.diagnostic');
-      const history = document.querySelector('.history-section');
-      const toggleAdvanced = document.getElementById('toggleAdvanced');
-      const advancedOptions = document.querySelector('.advanced-options');
-      const clearHistoryBtn = document.getElementById('clearHistory');
-      const toneStyle = document.getElementById('toneStyle');
-      const useAdvanced = document.getElementById('useAdvanced');
-      const remainingCount = document.getElementById('remainingCount');
-      const saveFavorite = document.getElementById('saveFavorite');
-      const favoritesList = document.getElementById('favoritesList');
-      let premiumUsageCount = 5;
-      
-      // 즐겨찾기 저장 버튼
-      if (saveFavorite) {
-        saveFavorite.onclick = function() {
-          const situation = document.getElementById('situation').value;
-          const target = document.getElementById('target').value;
-          
-          if (situation && target) {
-            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-            favorites.push({ situation, target });
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            
-            const favoriteItem = document.createElement('div');
-            favoriteItem.className = 'favorite-item';
-            
-            const content = document.createElement('span');
-            content.textContent = `${situation} - ${target}`;
-            content.onclick = function() {
-              document.getElementById('situation').value = situation;
-              document.getElementById('target').value = target;
-            };
-            
-            const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'delete-favorite';
-            deleteBtn.innerHTML = '×';
-            deleteBtn.style.cssText = `
-              background: none;
-              border: none;
-              color: #d3929b;
-              font-size: 16px;
-              cursor: pointer;
-              padding: 0 4px;
-              margin-left: 4px;
-            `;
-            deleteBtn.onclick = function(e) {
-              e.stopPropagation();
-              const index = favorites.findIndex(f => f.situation === situation && f.target === target);
-              if (index > -1) {
-                favorites.splice(index, 1);
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-                favoriteItem.remove();
-              }
-            };
-            
-            favoriteItem.appendChild(content);
-            favoriteItem.appendChild(deleteBtn);
-            document.getElementById('favoritesList').appendChild(favoriteItem);
-          } else {
-            alert('상황과 대상을 모두 입력해주세요.');
-          }
-        };
-      }
-
-      // 기본 조합 저장
-      const defaultFavorites = [
-        { situation: '회사', target: '상사' },
-        { situation: '학교', target: '교수님' },
-        { situation: '병원', target: '의사' }
-      ];
-      
-      // 로컬 스토리지에 기본 조합 저장
-      const existingFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-      const newFavorites = defaultFavorites.filter(df => 
-        !existingFavorites.some(ef => ef.situation === df.situation && ef.target === df.target)
-      );
-      
-      if (newFavorites.length > 0) {
-        const updatedFavorites = [...existingFavorites, ...newFavorites];
-        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-        
-        // UI에 기본 조합 추가
-        newFavorites.forEach(fav => {
-          const favoriteItem = document.createElement('div');
-          favoriteItem.className = 'favorite-item';
-          
-          const content = document.createElement('span');
-          content.textContent = `${fav.situation} - ${fav.target}`;
-          content.onclick = function() {
-            document.getElementById('situation').value = fav.situation;
-            document.getElementById('target').value = fav.target;
-          };
-          
-          const deleteBtn = document.createElement('button');
-          deleteBtn.className = 'delete-favorite';
-          deleteBtn.innerHTML = '×';
-          deleteBtn.style.cssText = `
-            background: none;
-            border: none;
-            color: #d3929b;
-            font-size: 16px;
-            cursor: pointer;
-            padding: 0 4px;
-            margin-left: 4px;
-          `;
-          deleteBtn.onclick = function(e) {
-            e.stopPropagation();
-            const index = updatedFavorites.findIndex(f => f.situation === fav.situation && f.target === fav.target);
-            if (index > -1) {
-              updatedFavorites.splice(index, 1);
-              localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-              favoriteItem.remove();
-            }
-          };
-          
-          favoriteItem.appendChild(content);
-          favoriteItem.appendChild(deleteBtn);
-          document.getElementById('favoritesList').appendChild(favoriteItem);
-        });
-      }
-
-      // 저장된 즐겨찾기 목록 표시
-      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-      favorites.forEach(fav => {
-        const favoriteItem = document.createElement('div');
-        favoriteItem.className = 'favorite-item';
-        
-        const content = document.createElement('span');
-        content.textContent = `${fav.situation} - ${fav.target}`;
-        content.onclick = function() {
-          document.getElementById('situation').value = fav.situation;
-          document.getElementById('target').value = fav.target;
-        };
-        
-        const deleteBtn = document.createElement('button');
-        deleteBtn.className = 'delete-favorite';
-        deleteBtn.innerHTML = '×';
-        deleteBtn.style.cssText = `
-          background: none;
-          border: none;
-          color: #d3929b;
-          font-size: 16px;
-          cursor: pointer;
-          padding: 0 4px;
-          margin-left: 4px;
-        `;
-        deleteBtn.onclick = function(e) {
-          e.stopPropagation();
-          const index = favorites.findIndex(f => f.situation === fav.situation && f.target === fav.target);
-          if (index > -1) {
-            favorites.splice(index, 1);
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            favoriteItem.remove();
-          }
-        };
-        
-        favoriteItem.appendChild(content);
-        favoriteItem.appendChild(deleteBtn);
-        document.getElementById('favoritesList').appendChild(favoriteItem);
-      });
-      
-      // 말투 스타일 설명 업데이트
-      function updateStyleDescription(style) {
-        const rules = styleRules[style].rules;
-        const description = document.getElementById('styleDescription');
-        if (description) {
-          description.innerHTML = `
-            <ul>
-              <li>어미: ${Array.isArray(rules.endings) ? rules.endings.join(', ') : rules.endings}</li>
-              ${rules.attitude ? `<li>태도: ${rules.attitude}</li>` : ''}
-              ${rules.pattern ? `<li>패턴: ${rules.pattern}</li>` : ''}
-            </ul>
-          `;
-        }
-      }
-      
-      // 말투 스타일 변경 시 설명 업데이트
-      if (toneStyle) {
-        toneStyle.addEventListener('change', function() {
-          updateStyleDescription(this.value);
-        });
-        
-        // 초기 말투 스타일 설명 설정
-        updateStyleDescription(toneStyle.value);
-      }
-      
-      // 복사 버튼 이벤트
-      document.querySelector('.copy-btn').addEventListener('click', async function() {
-        const resultText = document.querySelector('.result p').textContent;
-        try {
-          await navigator.clipboard.writeText(resultText);
-          
-          const successMessage = document.createElement('div');
-          successMessage.style.position = 'absolute';
-          successMessage.style.right = '0';
-          successMessage.style.top = '-30px';
-          successMessage.style.backgroundColor = '#4ade80';
-          successMessage.style.color = 'white';
-          successMessage.style.padding = '8px 16px';
-          successMessage.style.borderRadius = '4px';
-          successMessage.style.fontSize = '14px';
-          successMessage.textContent = '복사되었습니다!';
-          
-          this.style.position = 'relative';
-          this.appendChild(successMessage);
-          
-          setTimeout(() => {
-            successMessage.remove();
-          }, 2000);
-        } catch (err) {
-          alert('복사하기에 실패했습니다. 다시 시도해주세요.');
-        }
-      });
-
-      // 좋아요/별로예요 버튼 이벤트
-      const feedbackButtons = document.querySelectorAll('.vote-btn');
-      feedbackButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          const isGood = this.textContent.includes('좋아요');
-          const selectedStyle = document.getElementById('toneStyle').value;
-          const currentTemplate = document.querySelector('.result p').textContent;
-          
-          saveFeedback(selectedStyle, currentTemplate, isGood);
-          
-          // 피드백 메시지 표시
-          const feedbackMessage = document.createElement('div');
-          feedbackMessage.style.position = 'absolute';
-          feedbackMessage.style.right = '0';
-          feedbackMessage.style.top = '-30px';
-          feedbackMessage.style.backgroundColor = isGood ? '#4ade80' : '#f87171';
-          feedbackMessage.style.color = 'white';
-          feedbackMessage.style.padding = '8px 16px';
-          feedbackMessage.style.borderRadius = '4px';
-          feedbackMessage.style.fontSize = '14px';
-          feedbackMessage.textContent = isGood ? '피드백 감사합니다!' : '더 나은 변환을 위해 노력하겠습니다.';
-          
-          this.style.position = 'relative';
-          this.appendChild(feedbackMessage);
-          
-          setTimeout(() => {
-            feedbackMessage.remove();
-          }, 2000);
-        });
-      });
-    });
   </script>
 </body>
 </html>
