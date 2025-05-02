@@ -1,762 +1,134 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>말빛 - 공손한 말 변환기</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
     body {
-      font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+      font-family: 'Noto Sans KR', sans-serif;
       background-color: #f9e7f0;
-      margin: 0;
       padding: 20px;
-      color: #333;
-      line-height: 1.6;
     }
     .container {
-      max-width: 800px;
+      max-width: 700px;
       margin: 0 auto;
-      background: #fff;
+      background: white;
       padding: 32px;
       border-radius: 20px;
       box-shadow: 0 4px 20px rgba(173, 125, 160, 0.1);
     }
-    .header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-    .header h1 {
-      color: #ad7da0;
-      margin-bottom: 8px;
-      font-size: 36px;
-      font-weight: 700;
-    }
-    .header p {
-      color: #d3929b;
-      margin-top: 0;
-      font-size: 16px;
-      font-weight: 500;
-    }
-    .form-group {
-      margin-bottom: 24px;
-    }
-    label {
-      display: block;
-      font-size: 15px;
-      font-weight: 500;
-      color: #ad7da0;
-      margin-bottom: 8px;
-    }
-    input, textarea, select {
+    textarea, select, input {
       width: 100%;
-      padding: 12px 16px;
-      border: 2px solid #f4dbd3;
-      border-radius: 12px;
-      font-size: 15px;
-      background: #fff;
-      transition: all 0.3s ease;
-    }
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: #d3929b;
-      box-shadow: 0 0 0 3px rgba(211, 146, 155, 0.1);
-    }
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-    .btn {
-      background: linear-gradient(135deg, #d3929b, #ad7da0);
-      color: white;
-      border: none;
-      padding: 14px;
-      border-radius: 12px;
-      width: 100%;
-      font-size: 18px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(211, 146, 155, 0.3);
-    }
-    .btn:active {
-      transform: translateY(0);
-    }
-    .result {
-      margin-top: 24px;
-      padding: 20px;
-      background-color: #fdf6f8;
-      border: 2px solid #f4dbd3;
-      border-radius: 12px;
-    }
-    .result h3 {
-      margin-top: 0;
-      color: #ad7da0;
-      font-size: 18px;
-      font-weight: 600;
-    }
-    .result p {
-      background-color: #fff;
-      padding: 16px;
+      padding: 12px;
+      margin-top: 8px;
+      margin-bottom: 20px;
       border-radius: 10px;
-      border: 1px solid #f4dbd3;
-      margin: 12px 0;
+      border: 1px solid #ccc;
     }
-    .actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 16px;
-    }
-    .feedback-section {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .feedback-buttons {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 6px;
-    }
-    .vote-btn {
-      background-color: #fff;
-      border: 2px solid #f4dbd3;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 14px;
-      color: #ad7da0;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .vote-btn:hover {
-      background-color: #fdf6f8;
-      border-color: #d3929b;
-    }
-    .copy-btn {
-      background-color: #d3929b;
-      color: white;
+    button {
+      padding: 12px 20px;
       border: none;
-      padding: 8px 20px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .copy-btn:hover {
-      background-color: #c17f88;
-      transform: translateY(-1px);
-    }
-    .history-section {
-      margin-top: 24px;
-      padding: 20px;
-      background-color: #fdf6f8;
-      border: 2px solid #f4dbd3;
-      border-radius: 12px;
-    }
-    .history-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .history-header h3 {
-      margin: 0;
-      color: #ad7da0;
-      font-size: 18px;
-      font-weight: 600;
-    }
-    .clear-history {
-      background: none;
-      border: none;
-      color: #d3929b;
-      font-size: 14px;
-      cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 4px;
-      transition: all 0.3s ease;
-    }
-    .clear-history:hover {
-      background-color: #f4dbd3;
-    }
-    .history-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px;
-      background: #fff;
-      border-radius: 8px;
-      margin-bottom: 12px;
-      border: 1px solid #f4dbd3;
-    }
-    .history-content {
-      flex: 1;
-    }
-    .history-actions {
-      display: flex;
-      gap: 8px;
-    }
-    .delete-history {
-      background: none;
-      border: none;
-      color: #f87171;
-      cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 4px;
-      transition: all 0.3s ease;
-    }
-    .delete-history:hover {
-      background: #fee2e2;
-    }
-    .premium-feature {
-      background: #fdf6f8;
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 24px;
-      border: 2px solid #f4dbd3;
-    }
-    .premium-feature-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .remaining-count {
+      border-radius: 10px;
       background: #d3929b;
       color: white;
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
     }
-    .input-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 24px;
-      margin-bottom: 32px;
-    }
-    .situation-target-group {
-      display: flex;
-      gap: 40px;
-      width: 100%;
-      max-width: 300px;
-      margin: 0 auto;
-    }
-    .situation-target-group > div {
-      flex: 1;
-    }
-    .situation-target-group input {
-      width: 100%;
-      padding: 8px 12px;
-      border: 2px solid #f4dbd3;
-      border-radius: 8px;
-      font-size: 14px;
-      background: #fff;
-      transition: all 0.3s ease;
-      height: 36px;
-    }
-    .situation-target-group input:focus {
-      outline: none;
-      border-color: #d3929b;
-      box-shadow: 0 0 0 3px rgba(211, 146, 155, 0.1);
-    }
-    .text-input-group {
-      width: 100%;
-      max-width: 600px;
-      display: flex;
-      gap: 20px;
-    }
-    .text-input-group > div {
-      flex: 1;
-    }
-    .favorites-section {
-      margin-top: 16px;
+    .result {
+      background: #fff0f5;
       padding: 16px;
-      background: #fdf6f8;
-      border-radius: 12px;
-      border: 2px solid #f4dbd3;
-    }
-    .favorites-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 8px;
-    }
-    .favorite-item {
-      background: white;
-      border: 1px solid #d3929b;
-      border-radius: 20px;
-      padding: 6px 12px;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
-    .favorite-item:hover {
-      background: #fdf6f8;
-      transform: translateY(-1px);
-    }
-    .favorite-delete {
-      background: none;
-      border: none;
-      color: #d3929b;
-      cursor: pointer;
-      padding: 0 4px;
-      font-size: 16px;
-    }
-    .favorite-delete:hover {
-      color: #c17f88;
-    }
-    .save-favorite-btn {
-      background: linear-gradient(135deg, #d3929b, #ad7da0);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 8px rgba(211, 146, 155, 0.2);
-    }
-    .save-favorite-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(211, 146, 155, 0.3);
-    }
-    .save-favorite-btn:active {
-      transform: translateY(0);
+      border-radius: 10px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="header">
-      <h1>말빛</h1>
-      <p>당신의 말에 따뜻한 빛을 더해요</p>
-    </div>
-    
-    <div id="transformForm">
-      <div class="input-section">
-        <div class="situation-target-group">
-          <div style="flex: 1">
-            <label>상황/장소:</label>
-            <input type="text" id="situation" value="회사" placeholder="예: 회사, 학교, 병원" required>
-          </div>
-          <div style="flex: 1">
-            <label>대상/관계:</label>
-            <input type="text" id="target" value="상사" placeholder="예: 상사, 교수님, 환자" required>
-          </div>
-        </div>
-        
-        <div style="text-align: center;">
-          <button type="button" class="save-favorite-btn" id="saveFavorite">현재 조합 즐겨찾기 저장</button>
-        </div>
+    <h1>말빛</h1>
+    <p>당신의 말에 따뜻한 빛을 더해요 ✨</p>
 
-        <div class="favorites-section">
-          <h4 style="margin: 0">저장된 조합</h4>
-          <div class="favorites-list" id="favoritesList">
-            <!-- 즐겨찾기 항목들이 여기에 추가됩니다 -->
-          </div>
-        </div>
+    <label>상황/장소:</label>
+    <input type="text" id="situation" value="회사" />
 
-        <div class="text-input-group">
-          <div style="flex: 1;">
-            <label>말투 스타일:</label>
-            <select id="toneStyle">
-              <option value="polite">공손하고 친절</option>
-              <option value="business">비즈니스 격식</option>
-              <option value="rude">싸가지</option>
-              <option value="firm" selected>단호하지만 정중</option>
-            </select>
-          </div>
-          <div style="flex: 2;">
-            <label>텍스트:</label>
-            <textarea id="inputText" placeholder="예: 내일까지 보고서 줘" required>내일까지 보고서 줘</textarea>
-          </div>
-        </div>
-      </div>
+    <label>대상/관계:</label>
+    <input type="text" id="target" value="상사" />
 
-      <div class="premium-feature">
-        <div class="premium-feature-header">
-          <label for="useAdvanced" style="margin: 0; display: flex; align-items: center; gap: 8px;">
-            <input type="checkbox" id="useAdvanced" style="width: 20px; height: 20px; margin: 0;">
-            <strong style="font-size: 18px; color: #ad7da0;">고급 변환</strong>
-          </label>
-          <span class="remaining-count" id="remainingCount">남은 횟수: 5/5</span>
-        </div>
-        <div style="font-size: 13px; color: #666; margin-top: 8px;">AI 기반 맞춤형 문장 업그레이드 (무료 5회)</div>
-        
-        <div style="margin-top: 16px;">
-          <label>응답 길이:</label>
-          <select id="responseLength">
-            <option value="20">20자 이내 (매우 간단)</option>
-            <option value="50">50자 이내 (간단)</option>
-            <option value="100" selected>100자 이내 (보통)</option>
-            <option value="200">200자 이내 (자세히)</option>
-            <option value="500">500자 이내 (상세)</option>
-            <option value="1000">1000자 이내 (매우 상세)</option>
-          </select>
-        </div>
-      </div>
-      
-      <button type="button" class="btn" id="transformButton">예쁜 말 변환</button>
-    </div>
-    
-    <div class="loading" style="display: none;">
-      <div class="loading-spinner"></div>
-      <p>변환 중입니다...</p>
-    </div>
+    <label>말투 스타일:</label>
+    <select id="toneStyle">
+      <option value="polite">공손하고 친절</option>
+      <option value="business">비즈니스 격식</option>
+      <option value="rude">싸가지</option>
+      <option value="firm" selected>단호하지만 정중</option>
+    </select>
 
-    <div class="result" style="display: none;">
-      <h3>변환 결과:</h3>
-      <p>내일까지 보고서 주시면 감사드립니다. 기한 내 처리하겠습니다.</p>
-      
-      <div class="actions">
-        <div class="feedback-section">
-          <div class="feedback-buttons">
-            <button class="vote-btn">👍 좋아요</button>
-            <button class="vote-btn">👎 별로예요</button>
-          </div>
-          <span style="font-size: 12px; color: #666;">
-            사용자 피드백을 통해 더 나은 맞춤형 변환 서비스로 개선됩니다
-          </span>
-        </div>
-        <button class="copy-btn">결과 복사하기</button>
-      </div>
-    </div>
-    
-    <div class="history-section" style="display: none;">
-      <div class="history-header">
-        <h3>최근 변환 기록</h3>
-        <button class="clear-history" id="clearHistory">전체 삭제</button>
-      </div>
-      <div id="historyList"></div>
+    <label>텍스트:</label>
+    <textarea id="inputText" placeholder="예: 내일까지 보고서 줘">내일까지 보고서 줘</textarea>
+
+    <label>고급 변환 (AI 사용):
+      <input type="checkbox" id="useAdvanced" />
+    </label>
+
+    <label>응답 길이:</label>
+    <select id="responseLength">
+      <option value="50">50자</option>
+      <option value="100" selected>100자</option>
+      <option value="200">200자</option>
+      <option value="500">500자</option>
+    </select>
+
+    <button id="transformButton">예쁜 말 변환</button>
+
+    <div class="result" id="resultBox" style="display:none">
+      <h3>변환 결과</h3>
+      <p id="resultText"></p>
     </div>
   </div>
 
   <script>
-    // API 호출 함수
     async function callGeminiAPI(prompt) {
-      try {
-        console.log('API 호출 시작:', prompt);
-        const response = await fetch('https://malbit-api.vercel.app/api/gemini', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            prompt: prompt,
-            maxLength: parseInt(document.getElementById('responseLength').value),
-            style: document.getElementById('toneStyle').value,
-            situation: document.getElementById('situation').value,
-            target: document.getElementById('target').value
-          })
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error('API 오류 응답:', errorData);
-          throw new Error(`API 응답 오류: ${response.status} - ${errorData.error?.message || '알 수 없는 오류'}`);
-        }
-
-        const data = await response.json();
-        console.log('API 응답:', data);
-
-        if (!data.result) {
-          throw new Error('API 응답 형식 오류');
-        }
-
-        const result = data.result.trim();
-        console.log('변환 결과:', result);
-        return result;
-      } catch (error) {
-        console.error('API 호출 에러:', error);
-        throw new Error(`변환 중 오류가 발생했습니다: ${error.message}`);
-      }
-    }
-
-    // 변환 함수
-    async function transformSentence(text, style) {
-      const situation = document.getElementById('situation').value;
-      const target = document.getElementById('target').value;
-      const maxLength = parseInt(document.getElementById('responseLength').value);
-      
-      const prompt = `당신은 전문적인 한국어 변환 전문가입니다. 
-      다음 문장을 ${style}한 어조로 변환해주세요.
-
-      [요청사항]
-      1. 원문의 의미는 유지하면서 말투만 변경해주세요.
-      2. 응답은 반드시 ${maxLength}자 이내로 작성해주세요.
-      3. ${situation}에서 ${target}에게 하는 말이라는 점을 고려해주세요.
-      4. 다음 요소들을 포함해주세요:
-         - 간단한 이유나 배경 설명
-         - 구체적인 시간이나 기한
-         - 필요한 경우 추가적인 요청사항
-         - 감사나 배려의 표현
-      5. 존댓말과 예의를 갖춘 표현을 사용해주세요.
-      6. 자연스러운 문장 흐름을 유지해주세요.
-
-      [원문]
-      "${text}"`;
-      
-      try {
-        console.log('변환 시작:', { text, style, situation, target, maxLength });
-        const transformedText = await callGeminiAPI(prompt);
-        console.log('변환 완료:', transformedText);
-        return transformedText;
-      } catch (error) {
-        console.error('변환 실패:', error);
-        throw error;
-      }
-    }
-
-    // 말투 스타일 규칙
-    const styleRules = {
-      polite: {
-        name: '공손하고 친절',
-        transform: (text) => {
-          return text.replace(/줘$/g, '주시면 감사하겠습니다')
-                    .replace(/해$/g, '해주시면 감사드리겠습니다')
-                    .replace(/^(.*)(해|줘|좀|요청|부탁)$/g, '혹시 $1해주실 수 있을까요?');
-        }
-      },
-      business: {
-        name: '비즈니스 격식',
-        transform: (text) => {
-          return text.replace(/줘$/g, '전달 부탁드립니다')
-                    .replace(/해$/g, '진행하도록 하겠습니다')
-                    .replace(/^(.*)(해|줘|좀|요청|부탁)$/g, '$1 검토 후 회신 부탁드립니다');
-        }
-      },
-      rude: {
-        name: '싸가지',
-        transform: (text) => {
-          return text.replace(/줘$/g, '줘봐, 얼마나 걸리는데?')
-                    .replace(/해$/g, '해봐, 뭐가 그리 어려워?')
-                    .replace(/^(.*)(해|줘|좀|요청|부탁)$/g, '$1 당연히 해야 되는 거 아님?');
-        }
-      },
-      firm: {
-        name: '단호하지만 정중',
-        transform: (text) => {
-          return text.replace(/줘$/g, '전달 바랍니다')
-                    .replace(/해$/g, '진행해주시기 바랍니다')
-                    .replace(/^(.*)(해|줘|좀|요청|부탁)$/g, '$1 반드시 필요한 사항이오니 협조 부탁드립니다');
-        }
-      }
-    };
-
-    // 페이지 로드 시 초기화
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('페이지 로드 완료');
-      
-      // 남은 횟수 초기화
-      let premiumUsageCount = 5;
-      const remainingCount = document.getElementById('remainingCount');
-      if (remainingCount) {
-        remainingCount.textContent = `남은 횟수: ${premiumUsageCount}/5`;
-      }
-
-      // 즐겨찾기 목록 로드
-      function loadFavorites() {
-        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-        const favoritesList = document.getElementById('favoritesList');
-        favoritesList.innerHTML = '';
-        
-        favorites.forEach((favorite, index) => {
-          const favoriteItem = document.createElement('div');
-          favoriteItem.className = 'favorite-item';
-          
-          const content = document.createElement('span');
-          content.textContent = `${favorite.situation} - ${favorite.target}`;
-          content.onclick = function() {
-            document.getElementById('situation').value = favorite.situation;
-            document.getElementById('target').value = favorite.target;
-          };
-          
-          const deleteBtn = document.createElement('button');
-          deleteBtn.className = 'favorite-delete';
-          deleteBtn.textContent = '×';
-          deleteBtn.onclick = function(e) {
-            e.stopPropagation();
-            favorites.splice(index, 1);
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            loadFavorites();
-          };
-          
-          favoriteItem.appendChild(content);
-          favoriteItem.appendChild(deleteBtn);
-          favoritesList.appendChild(favoriteItem);
-        });
-      }
-
-      // 초기 즐겨찾기 로드
-      loadFavorites();
-
-      // 즐겨찾기 저장
-      const saveFavorite = document.getElementById('saveFavorite');
-      if (saveFavorite) {
-        saveFavorite.addEventListener('click', function() {
-          const situation = document.getElementById('situation').value.trim();
-          const target = document.getElementById('target').value.trim();
-          
-          if (situation && target) {
-            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-            const isDuplicate = favorites.some(f => 
-              f.situation === situation && f.target === target
-            );
-            
-            if (!isDuplicate) {
-              favorites.push({ situation, target });
-              localStorage.setItem('favorites', JSON.stringify(favorites));
-              loadFavorites();
-              alert('즐겨찾기에 저장되었습니다.');
-            } else {
-              alert('이미 저장된 조합입니다.');
-            }
-          } else {
-            alert('상황과 대상을 모두 입력해주세요.');
-          }
-        });
-      }
-
-      // 고급 변환 체크박스 이벤트
-      const useAdvanced = document.getElementById('useAdvanced');
-      if (useAdvanced) {
-        useAdvanced.addEventListener('change', function() {
-          if (this.checked && premiumUsageCount <= 0) {
-            alert('무료 사용 횟수를 모두 소진하셨습니다.');
-            this.checked = false;
-          }
-        });
-      }
-
-      // 변환 버튼
-      const transformButton = document.getElementById('transformButton');
-      if (transformButton) {
-        transformButton.addEventListener('click', async function() {
-          console.log('변환 버튼 클릭됨');
-          const inputText = document.getElementById('inputText').value.trim();
-          const selectedStyle = document.getElementById('toneStyle').value;
-          const useAdvanced = document.getElementById('useAdvanced');
-          
-          if (!inputText) {
-            alert('변환할 문장을 입력해주세요.');
-            return;
-          }
-
-          document.querySelector('.loading').style.display = 'block';
-          document.querySelector('.result').style.display = 'none';
-          document.querySelector('.history-section').style.display = 'none';
-
-          try {
-            let transformedText;
-            if (useAdvanced && useAdvanced.checked) {
-              console.log('AI 변환 사용');
-              if (premiumUsageCount <= 0) {
-                alert('무료 사용 횟수를 모두 소진하셨습니다.');
-                document.querySelector('.loading').style.display = 'none';
-                return;
-              }
-              
-              // AI 변환 실행
-              transformedText = await transformSentence(inputText, selectedStyle);
-              console.log('AI 변환 결과:', transformedText);
-              
-              // 횟수 차감
-              premiumUsageCount--;
-              remainingCount.textContent = `남은 횟수: ${premiumUsageCount}/5`;
-            } else {
-              console.log('기본 변환 사용');
-              transformedText = styleRules[selectedStyle].transform(inputText);
-              console.log('기본 변환 결과:', transformedText);
-            }
-
-            setTimeout(() => {
-              document.querySelector('.loading').style.display = 'none';
-              document.querySelector('.result').style.display = 'block';
-              document.querySelector('.history-section').style.display = 'block';
-
-              document.querySelector('.result p').textContent = transformedText;
-              addToHistory(inputText, transformedText, selectedStyle);
-            }, 1500);
-          } catch (error) {
-            console.error('변환 중 오류:', error);
-            document.querySelector('.loading').style.display = 'none';
-            alert('변환 중 오류가 발생했습니다: ' + error.message);
-          }
-        });
-      }
-
-      // 복사 버튼
-      const copyBtn = document.querySelector('.copy-btn');
-      if (copyBtn) {
-        copyBtn.addEventListener('click', async function() {
-          const resultText = document.querySelector('.result p').textContent;
-          try {
-            await navigator.clipboard.writeText(resultText);
-            alert('복사되었습니다!');
-          } catch (err) {
-            alert('복사하기에 실패했습니다.');
-          }
-        });
-      }
-
-      // 피드백 버튼
-      document.querySelectorAll('.vote-btn').forEach(button => {
-        button.addEventListener('click', function() {
-          const isLike = this.textContent.includes('좋아요');
-          alert(isLike ? '좋아요 감사합니다!' : '피드백 감사합니다.');
-        });
+      const response = await fetch('https://malbit-api.vercel.app/api/gemini', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt,
+          maxLength: parseInt(document.getElementById('responseLength').value),
+          style: document.getElementById('toneStyle').value,
+          situation: document.getElementById('situation').value,
+          target: document.getElementById('target').value
+        })
       });
+      const data = await response.json();
+      return data.result;
+    }
 
-      // 기록 삭제
-      const clearHistoryBtn = document.getElementById('clearHistory');
-      if (clearHistoryBtn) {
-        clearHistoryBtn.addEventListener('click', function() {
-          const historyList = document.getElementById('historyList');
-          historyList.innerHTML = '';
-          document.querySelector('.history-section').style.display = 'none';
-        });
+    document.getElementById('transformButton').addEventListener('click', async () => {
+      const text = document.getElementById('inputText').value.trim();
+      const style = document.getElementById('toneStyle').value;
+      const useAI = document.getElementById('useAdvanced').checked;
+
+      if (!text) {
+        alert('문장을 입력해주세요.');
+        return;
       }
+
+      let output = '';
+      if (useAI) {
+        try {
+          output = await callGeminiAPI(`다음 문장을 ${style}한 말투로 바꿔줘: ${text}`);
+        } catch (err) {
+          output = '고급 변환 중 오류 발생';
+        }
+      } else {
+        output = text.replace(/줘$/, '주시면 감사하겠습니다');
+      }
+
+      document.getElementById('resultText').innerText = output;
+      document.getElementById('resultBox').style.display = 'block';
     });
-
-    // 기록 추가 함수
-    function addToHistory(originalText, transformedText, style) {
-      const historyList = document.getElementById('historyList');
-      const historyItem = document.createElement('div');
-      historyItem.className = 'history-item';
-      
-      historyItem.innerHTML = `
-        <div class="history-content">
-          <div><strong>원문:</strong> ${originalText}</div>
-          <div><strong>변환:</strong> ${transformedText}</div>
-          <div style="color: #666; font-size: 12px;">스타일: ${styleRules[style].name}</div>
-        </div>
-        <div class="history-actions">
-          <button class="delete-history">삭제</button>
-        </div>
-      `;
-      
-      historyItem.querySelector('.delete-history').addEventListener('click', function() {
-        historyList.removeChild(historyItem);
-        if (historyList.children.length === 0) {
-          document.querySelector('.history-section').style.display = 'none';
-        }
-      });
-      
-      if (historyList.children.length >= 5) {
-        historyList.removeChild(historyList.lastChild);
-      }
-      
-      historyList.insertBefore(historyItem, historyList.firstChild);
-    }
   </script>
 </body>
 </html>
