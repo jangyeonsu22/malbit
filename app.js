@@ -452,10 +452,9 @@ function saveRemainingUses() {
 }
 
 function loadRemainingUses() {
-  const savedUses = localStorage.getItem(STORAGE_KEYS.REMAINING_USES);
-  if (savedUses !== null) {
-    remainingAdvancedUses = parseInt(savedUses);
-  }
+  remainingAdvancedUses = MAX_ADVANCED_USES;
+  // localStorage에서 기존 값 제거
+  localStorage.removeItem(STORAGE_KEYS.REMAINING_USES);
 }
 
 function updateRemainingCount() {
