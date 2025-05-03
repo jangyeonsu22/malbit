@@ -26,13 +26,20 @@
             <input type="text" id="target" value="상사" placeholder="예: 상사, 교수님, 환자" required>
           </div>
         </div>
+        
+        <div class="favorites-section">
+          <button type="button" class="favorite-add-btn" id="addFavoriteBtn">현재 조합 즐겨찾기</button>
+          <div id="favoriteCombinations" class="favorite-combinations">
+            <!-- Favorites will be dynamically inserted here -->
+          </div>
+        </div>
 
         <div class="text-input-group" style="margin-top: 24px;">
           <div style="flex: 1;">
             <label>기능 선택:</label>
             <select id="mode">
-              <option value="rephrase">예쁜 말로 바꾸기</option>
-              <option value="reply">질문에 답변하기</option>
+              <option value="answer">질문에 답변하기</option>
+              <option value="refine">답변을 다듬기</option>
             </select>
           </div>
         </div>
@@ -40,12 +47,15 @@
         <div class="text-input-group" style="margin-top: 16px;">
           <div style="flex: 1;">
             <label>말투 스타일:</label>
-            <select id="toneStyle">
-              <option value="polite">공손하고 친절</option>
-              <option value="business">비즈니스 격식</option>
-              <option value="rude">싸가지</option>
-              <option value="firm" selected>단호하지만 정중</option>
-            </select>
+            <div class="tone-style-container">
+              <select id="toneStyle">
+                <option value="polite" data-tooltip="부드럽고 정중한 표현으로 말합니다">공손하고 친절</option>
+                <option value="business" data-tooltip="격식있고 전문적인 어투로 표현합니다">비즈니스 격식</option>
+                <option value="rude" data-tooltip="거칠고 직설적인 표현을 사용합니다">싸가지</option>
+                <option value="firm" selected data-tooltip="자신감 있고 명확하게 표현하되 예의를 갖춥니다">단호하지만 정중</option>
+              </select>
+              <div class="tooltip" id="toneStyleTooltip"></div>
+            </div>
           </div>
           <div style="flex: 2;">
             <label id="inputTextLabel">텍스트:</label>
@@ -94,6 +104,8 @@
             <button class="vote-btn">👍 좋아요</button>
             <button class="vote-btn">👎 별로예요</button>
           </div>
+          <textarea id="feedbackText" placeholder="의견을 남겨주세요..." class="feedback-text"></textarea>
+          <button class="submit-feedback-btn" id="submitFeedbackBtn">피드백 제출</button>
         </div>
         <button class="copy-btn">결과 복사하기</button>
       </div>
