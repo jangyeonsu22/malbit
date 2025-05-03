@@ -1,0 +1,28 @@
+{
+  "name": "malbit",
+  "version": "1.0.0",
+  "description": "말빛 - 공손한 말 변환기 & 대화 응답기",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "mkdir -p dist && cp index.html styles.css app.js dist/ && echo \"const express = require('express'); const path = require('path'); const app = express(); const PORT = process.env.PORT || 3000; app.use(express.static(path.join(__dirname))); app.get('/', (req, res) => { res.sendFile(path.join(__dirname, 'index.html')); }); app.listen(PORT, () => { console.log(\\`Server running on port \\${PORT}\\`); });\" > dist/server.js && cp package.json .env dist/"
+  },
+  "keywords": [
+    "korean",
+    "language",
+    "converter",
+    "polite",
+    "speech"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
