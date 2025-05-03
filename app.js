@@ -1,153 +1,53 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>말빛 - 공손한 말 변환기</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background: linear-gradient(135deg, #fce4ec, #f8bbd0);
-      padding: 20px;
-      color: #4a4a4a;
+document.getElementById("transformButton").addEventListener("click", () => {
+  const inputText = document.getElementById("inputText").value.trim();
+  const mode = document.getElementById("mode").value;
+  const tone = document.getElementById("toneStyle").value;
+  const length = parseInt(document.getElementById("responseLength").value);
+  const useAdvanced = document.getElementById("useAdvanced").checked;
+
+  if (!inputText) {
+    alert("텍스트를 입력해 주세요.");
+    return;
+  }
+
+  let resultText = "";
+
+  // 예시 응답 텍스트 (내용은 동일, 말투만 변함)
+  const responses = {
+    short: {
+      polite: "내일까지 부탁드릴게요.",
+      business: "내일까지 제출 부탁드립니다.",
+      rude: "내일까지 안 주면 곤란해.",
+      firm: "내일까지 꼭 부탁드립니다."
+    },
+    medium: {
+      polite: "혹시 괜찮으시다면 내일까지 보고서 부탁드려도 될까요?",
+      business: "내일까지 보고서 제출 부탁드립니다. 감사합니다.",
+      rude: "보고서 내일까지 좀 줘라.",
+      firm: "내일까지 보고서 부탁드립니다. 중요한 일정입니다."
+    },
+    long: {
+      polite: "바쁘시겠지만, 혹시 가능하시다면 내일까지 보고서를 부탁드릴 수 있을까요? 항상 감사드립니다.",
+      business: "해당 보고서는 중요한 일정에 포함되어 있어, 내일까지 제출해 주시면 감사하겠습니다.",
+      rude: "이런 것도 늦게 주면 나중에 책임 못 져.",
+      firm: "내일까지 보고서를 꼭 부탁드립니다. 일정상 반드시 필요합니다."
     }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: #fff0f5;
-      padding: 32px;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(160, 90, 140, 0.15);
-    }
-    h1 {
-      text-align: center;
-      color: #ad7da0;
-    }
-    label {
-      font-weight: bold;
-      margin-top: 10px;
-      display: block;
-    }
-    input, textarea, select {
-      width: 100%;
-      padding: 12px;
-      margin-top: 5px;
-      margin-bottom: 20px;
-      border-radius: 10px;
-      border: 1px solid #d8a4c0;
-      background: #fff8fc;
-    }
-    button {
-      padding: 12px 20px;
-      border: none;
-      border-radius: 10px;
-      background: #d3929b;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 10px;
-    }
-    .result {
-      background: #fffafc;
-      padding: 16px;
-      border-radius: 10px;
-      margin-top: 20px;
-      border: 1px dashed #e4a3b0;
-    }
-    .remaining-count {
-      color: #d3628a;
-      font-weight: bold;
-      float: right;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>말빛</h1>
-    <label>상황/장소:</label>
-    <input type="text" id="situation" value="회사" />
+  };
 
-    <label>대상/관계:</label>
-    <input type="text" id="target" value="상사" />
-
-    <label>말투 스타일:</label>
-    <select id="toneStyle">
-      <option value="polite">공손하고 친절</option>
-      <option value="business">비즈니스 격식</option>
-      <option value="rude">싸가지</option>
-      <option value="firm" selected>단호하지만 정중</option>
-    </select>
-
-    <label>텍스트:</label>
-    <textarea id="inputText" placeholder="예: 내일까지 보고서 줘">내일까지 보고서 줘</textarea>
-
-    <label>고급 변환 (AI 사용): <input type="checkbox" id="useAdvanced" /></label>
-
-    <label>응답 길이:</label>
-    <select id="responseLength">
-      <option value="50">50자</option>
-      <option value="100">100자</option>
-      <option value="200" selected>200자</option>
-      <option value="500">500자</option>
-    </select>
-
-    <div class="remaining-count" id="remainingCount">남은 횟수: 5/5</div>
-
-    <button id="transformButton">예쁜 말 변환</button>
-
-    <div class="result" id="resultBox" style="display:none">
-      <h3>변환 결과</h3>
-      <p id="resultText"></p>
-    </div>
-  </div>
-
-  <script>
-    const MAX_ADVANCED_USES = 5;
-    let remainingUses = MAX_ADVANCED_USES;
-    document.getElementById('remainingCount').innerText = `남은 횟수: ${remainingUses}/5`;
-
-    async function callGeminiAPI(prompt, length) {
-      const response = await fetch('https://malbit-api.vercel.app/api/gemini', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt,
-          maxLength: length,
-          style: document.getElementById('toneStyle').value,
-          situation: document.getElementById('situation').value,
-          target: document.getElementById('target').value
-        })
-      });
-      const data = await response.json();
-      return data.result;
+  if (useAdvanced) {
+    let lengthCategory = "short";
+    if (length > 50 && length <= 200) {
+      lengthCategory = "medium";
+    } else if (length > 200) {
+      lengthCategory = "long";
     }
 
-    document.getElementById('transformButton').addEventListener('click', async () => {
-      const text = document.getElementById('inputText').value.trim();
-      const useAI = document.getElementById('useAdvanced').checked;
-      const length = parseInt(document.getElementById('responseLength').value);
+    resultText = responses[lengthCategory][tone] || "적절한 변환 결과를 찾을 수 없습니다.";
+  } else {
+    resultText = `"${inputText}" → (일반 변환 결과)`;
+  }
 
-      if (!text) return alert('문장을 입력해주세요.');
-
-      let output = '';
-      if (useAI) {
-        if (remainingUses <= 0) return alert('고급 변환 횟수를 모두 사용하셨습니다.');
-        try {
-          output = await callGeminiAPI(`다음 문장을 정중하게 바꿔줘: ${text}`, length);
-          remainingUses--;
-          document.getElementById('remainingCount').innerText = `남은 횟수: ${remainingUses}/5`;
-        } catch {
-          output = '고급 변환 중 오류 발생';
-        }
-      } else {
-        output = text.replace(/줘$/, '주시면 감사하겠습니다');
-      }
-
-      document.getElementById('resultText').innerText = output;
-      document.getElementById('resultBox').style.display = 'block';
-    });
-  </script>
-</body>
-</html>
+  // 결과 표시
+  document.querySelector(".result p").innerText = resultText;
+  document.querySelector(".result").style.display = "block";
+});
