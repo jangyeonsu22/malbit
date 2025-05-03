@@ -453,8 +453,8 @@ function saveRemainingUses() {
 
 function loadRemainingUses() {
   remainingAdvancedUses = MAX_ADVANCED_USES;
-  // localStorage에서 기존 값 제거
-  localStorage.removeItem(STORAGE_KEYS.REMAINING_USES);
+  // localStorage에 최대값 저장
+  localStorage.setItem(STORAGE_KEYS.REMAINING_USES, MAX_ADVANCED_USES.toString());
 }
 
 function updateRemainingCount() {
