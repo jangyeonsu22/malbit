@@ -16,37 +16,173 @@ const voteButtons = document.querySelectorAll('.vote-btn');
 const historySection = document.querySelector('.history-section');
 const historyList = document.getElementById('historyList');
 const clearHistoryButton = document.getElementById('clearHistory');
+const addFavoriteBtn = document.getElementById('addFavoriteBtn');
+const favoriteCombinations = document.getElementById('favoriteCombinations');
+const toneStyleTooltip = document.getElementById('toneStyleTooltip');
+const feedbackText = document.getElementById('feedbackText');
+const submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
 
 const MAX_ADVANCED_USES = 5;
 const STORAGE_KEYS = {
   HISTORY: 'malbit_history',
-  REMAINING_USES: 'malbit_remaining_uses'
+  REMAINING_USES: 'malbit_remaining_uses',
+  FAVORITES: 'malbit_favorites',
+  PREFERENCES: 'malbit_preferences'
 };
 
 let history = [];
+let favorites = [];
 let remainingAdvancedUses = MAX_ADVANCED_USES;
 
 function init() {
   loadHistory();
   loadRemainingUses();
+  loadFavorites();
+  loadPreferences();
   updateRemainingCount();
   updateModeLabel();
+  renderFavorites();
+  setupTooltips();
   
-  modeSelect.addEventListener('change', updateModeLabel);
+  modeSelect.addEventListener('change', () => {
+    updateModeLabel();
+    savePreferences();
+  });
+  
+  toneStyleSelect.addEventListener('change', savePreferences);
   transformButton.addEventListener('click', handleTransform);
   copyButton.addEventListener('click', copyResult);
   clearHistoryButton.addEventListener('click', clearHistory);
+  addFavoriteBtn.addEventListener('click', addFavorite);
+  submitFeedbackBtn.addEventListener('click', submitFeedback);
   
   voteButtons.forEach(button => {
     button.addEventListener('click', () => handleVote(button.textContent.includes('좋아요')));
   });
 }
 
+function setupTooltips() {
+  const options = toneStyleSelect.querySelectorAll('option');
+  
+  toneStyleSelect.addEventListener('mouseover', (e) => {
+    const selectedOption = toneStyleSelect.options[toneStyleSelect.selectedIndex];
+    const tooltip = selectedOption.getAttribute('data-tooltip');
+    
+    if (tooltip) {
+      toneStyleTooltip.textContent = tooltip;
+      toneStyleTooltip.style.display = 'block';
+    }
+  });
+  
+  toneStyleSelect.addEventListener('mouseout', () => {
+    toneStyleTooltip.style.display = 'none';
+  });
+}
+
 function updateModeLabel() {
-  inputTextLabel.textContent = modeSelect.value === 'rephrase' ? '텍스트:' : '질문:';
-  inputTextArea.placeholder = modeSelect.value === 'rephrase' 
-    ? '예: 내일까지 보고서 줘' 
-    : '예: 이번 프로젝트 언제까지 마무리해야 하나요?';
+  if (modeSelect.value === 'answer') {
+    inputTextLabel.textContent = '질문:';
+    inputTextArea.placeholder = '예: 이번 프로젝트 언제까지 마무리해야 하나요?';
+  } else if (modeSelect.value === 'refine') {
+    inputTextLabel.textContent = '답변:';
+    inputTextArea.placeholder = '예: 지금은 어렵습니다. 다음에 다시 요청해주세요.';
+  }
+}
+
+function addFavorite() {
+  const situation = situationInput.value.trim();
+  const target = targetInput.value.trim();
+  
+  if (!situation || !target) {
+    alert('상황/장소와 대상/관계를 모두 입력해주세요.');
+    return;
+  }
+  
+  const exists = favorites.some(fav => 
+    fav.situation === situation && fav.target === target
+  );
+  
+  if (exists) {
+    alert('이미 즐겨찾기에 추가된 조합입니다.');
+    return;
+  }
+  
+  favorites.push({ situation, target });
+  saveFavorites();
+  renderFavorites();
+}
+
+function renderFavorites() {
+  favoriteCombinations.innerHTML = '';
+  
+  favorites.forEach((fav, index) => {
+    const favoriteItem = document.createElement('div');
+    favoriteItem.className = 'favorite-item';
+    favoriteItem.innerHTML = `
+      ${fav.situation} / ${fav.target}
+      <span class="remove-favorite" data-index="${index}">×</span>
+    `;
+    
+    favoriteItem.querySelector('.remove-favorite').addEventListener('click', (e) => {
+      e.stopPropagation();
+      removeFavorite(index);
+    });
+    
+    favoriteItem.addEventListener('click', () => {
+      applyFavorite(fav);
+    });
+    
+    favoriteCombinations.appendChild(favoriteItem);
+  });
+}
+
+function removeFavorite(index) {
+  favorites.splice(index, 1);
+  saveFavorites();
+  renderFavorites();
+}
+
+function applyFavorite(favorite) {
+  situationInput.value = favorite.situation;
+  targetInput.value = favorite.target;
+}
+
+function saveFavorites() {
+  localStorage.setItem(STORAGE_KEYS.FAVORITES, JSON.stringify(favorites));
+}
+
+function loadFavorites() {
+  const savedFavorites = localStorage.getItem(STORAGE_KEYS.FAVORITES);
+  if (savedFavorites) {
+    favorites = JSON.parse(savedFavorites);
+  }
+}
+
+function savePreferences() {
+  const preferences = {
+    mode: modeSelect.value,
+    toneStyle: toneStyleSelect.value
+  };
+  localStorage.setItem(STORAGE_KEYS.PREFERENCES, JSON.stringify(preferences));
+}
+
+function loadPreferences() {
+  const savedPreferences = localStorage.getItem(STORAGE_KEYS.PREFERENCES);
+  if (savedPreferences) {
+    const preferences = JSON.parse(savedPreferences);
+    modeSelect.value = preferences.mode || 'answer';
+    toneStyleSelect.value = preferences.toneStyle || 'firm';
+  }
+}
+
+function submitFeedback() {
+  const feedback = feedbackText.value.trim();
+  if (feedback) {
+    alert('피드백을 보내주셔서 감사합니다. 더 나은 서비스를 위해 노력하겠습니다.');
+    feedbackText.value = '';
+  } else {
+    alert('피드백 내용을 입력해주세요.');
+  }
 }
 
 function handleTransform() {
@@ -72,68 +208,107 @@ function handleTransform() {
   loadingElement.style.display = 'block';
   resultElement.style.display = 'none';
   
-  setTimeout(() => {
-    const result = generateResponse(situation, target, mode, toneStyle, inputText, useAdvanced, responseLength);
-    
-    if (useAdvanced) {
-      remainingAdvancedUses--;
-      saveRemainingUses();
-      updateRemainingCount();
+  fetch('/api/transform', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      situation,
+      target,
+      mode,
+      toneStyle,
+      inputText,
+      useAdvanced,
+      responseLength
+    })
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('서버 응답 오류');
     }
-    
-    resultTextElement.textContent = result;
-    loadingElement.style.display = 'none';
-    resultElement.style.display = 'block';
-    
-    addToHistory(situation, target, mode, toneStyle, inputText, result);
-    
-    historySection.style.display = 'block';
-  }, 1500);
+    return response.json();
+  })
+  .then(data => {
+    processResult(data.result, situation, target, mode, toneStyle, inputText, useAdvanced);
+  })
+  .catch(error => {
+    console.error('API 호출 실패:', error);
+    setTimeout(() => {
+      const result = generateResponse(situation, target, mode, toneStyle, inputText, useAdvanced, responseLength);
+      processResult(result, situation, target, mode, toneStyle, inputText, useAdvanced);
+    }, 1000);
+  });
+}
+
+function processResult(result, situation, target, mode, toneStyle, inputText, useAdvanced) {
+  if (useAdvanced) {
+    remainingAdvancedUses--;
+    saveRemainingUses();
+    updateRemainingCount();
+  }
+  
+  resultTextElement.textContent = result;
+  loadingElement.style.display = 'none';
+  resultElement.style.display = 'block';
+  
+  addToHistory(situation, target, mode, toneStyle, inputText, result);
+  
+  historySection.style.display = 'block';
 }
 
 function generateResponse(situation, target, mode, toneStyle, inputText, useAdvanced, responseLength) {
-  
   let response = '';
   const maxLength = parseInt(responseLength);
   
-  if (mode === 'rephrase') {
+  if (mode === 'answer') {
     switch (toneStyle) {
       case 'polite':
+        response = `질문해 주셔서 감사합니다. ${inputText}에 대한 답변을 드리자면, `;
         if (situation === '회사' && target === '상사') {
-          response = '내일까지 보고서를 제출해 주시면 감사하겠습니다.';
+          response += '가능한 일정을 확인하여 조율해 보겠습니다.';
         } else {
-          response = `${inputText}를 정중하고 친절하게 바꾸었습니다.`;
+          response += '세부 사항을 고려하여 답변 드리겠습니다.';
         }
         break;
       case 'business':
-        response = `${target}님, ${inputText}에 대해 업무적으로 요청드립니다.`;
+        response = `${target}님의 "${inputText}" 질문에 답변드립니다. `;
+        response += '해당 사항은 확인 후 진행하겠습니다.';
         break;
       case 'firm':
-        response = `${target}님, 내일까지 보고서 제출 부탁드립니다.`;
+        response = `${inputText}에 대해 말씀드리자면, `;
+        response += '가능한 빠른 시일 내에 처리하겠습니다.';
         break;
       case 'rude':
-        response = `야, 그거 내일까지 줘.`;
+        response = `그런 질문도 하냐? ${inputText}? `;
+        response += '알아서 처리할게.';
         break;
+      default:
+        response = `${inputText}에 대한 답변입니다.`;
     }
-  } else { // reply mode
+  } else if (mode === 'refine') {
     switch (toneStyle) {
       case 'polite':
-        response = `질문해 주셔서 감사합니다. ${inputText}에 대한 답변은 다음과 같습니다...`;
+        response = inputText.replace(/어렵습니다|안됩니다|불가능합니다/g, '현재로서는 조율이 필요할 것 같습니다');
+        response = response.replace(/싫어요|싫습니다|안해요/g, '다른 방안을 고려해보는 것이 좋을 것 같습니다');
         break;
       case 'business':
-        response = `${target}님의 ${inputText}에 대한 질문에 답변드립니다.`;
+        response = `검토 결과, ${inputText.toLowerCase().replace(/\.$/, '')}라는 결론에 도달했습니다.`;
         break;
       case 'firm':
-        response = `${inputText}에 대한 답변은 명확합니다.`;
+        response = `${target}님, ${inputText.toLowerCase().replace(/\.$/, '')}는 점 양해 부탁드립니다.`;
         break;
       case 'rude':
-        response = `그런 질문도 하냐? 답은 이거야.`;
+        response = `그냥 ${inputText.toLowerCase().replace(/\.$/, '')}니까 더 묻지마.`;
         break;
+      default:
+        response = `${inputText}를 다듬었습니다.`;
     }
   }
   
   if (useAdvanced) {
-    response += ` ${situation}에서 ${target}과의 관계를 고려한 맞춤형 응답입니다. 이 응답은 AI 기반 고급 변환 기능을 사용하여 생성되었습니다.`;
+    response = response.replace('AI 기반 고급 변환 기능을 사용하여 생성되었습니다.', '');
+    response += ` ${situation}에서 ${target}과의 관계를 고려했습니다.`;
   }
   
   if (response.length > maxLength) {
@@ -160,6 +335,8 @@ function copyResult() {
 }
 
 function handleVote(isPositive) {
+  feedbackText.style.display = 'block';
+  submitFeedbackBtn.style.display = 'block';
   alert(isPositive ? '피드백 감사합니다! 더 좋은 서비스로 보답하겠습니다.' : '불편을 드려 죄송합니다. 더 나은 서비스가 되도록 노력하겠습니다.');
 }
 
@@ -193,13 +370,24 @@ function renderHistory() {
     const historyItem = document.createElement('div');
     historyItem.className = 'history-item';
     
-    const modeText = item.mode === 'rephrase' ? '변환' : '답변';
+    let modeText;
+    if (item.mode === 'answer') {
+      modeText = '질문 답변';
+    } else if (item.mode === 'refine') {
+      modeText = '답변 다듬기';
+    } else {
+      modeText = '변환';
+    }
+    
     const toneText = getToneStyleText(item.toneStyle);
     
     historyItem.innerHTML = `
       <div class="history-item-header">
         <span>${item.timestamp}</span>
-        <span>${item.situation} / ${item.target} / ${toneText} / ${modeText}</span>
+        <div>
+          <span>${item.situation} / ${item.target} / ${toneText} / ${modeText}</span>
+          <button class="delete-history-btn" data-id="${item.id}">삭제</button>
+        </div>
       </div>
       <div class="history-item-content">${item.inputText}</div>
       <div class="history-item-result">${item.result}</div>
@@ -207,6 +395,24 @@ function renderHistory() {
     
     historyList.appendChild(historyItem);
   });
+  
+  document.querySelectorAll('.delete-history-btn').forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      deleteHistoryItem(button.getAttribute('data-id'));
+    });
+  });
+}
+
+function deleteHistoryItem(id) {
+  id = parseInt(id);
+  history = history.filter(item => item.id !== id);
+  saveHistory();
+  renderHistory();
+  
+  if (history.length === 0) {
+    historySection.style.display = 'none';
+  }
 }
 
 function getToneStyleText(toneStyle) {

@@ -10,6 +10,7 @@ body {
   background-color: #f8f9fa;
   color: #333;
   line-height: 1.6;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .container {
@@ -85,6 +86,56 @@ textarea {
   resize: vertical;
 }
 
+/* Favorites Styles */
+.favorites-section {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.favorite-add-btn {
+  padding: 8px 15px;
+  background-color: #f0e6ed;
+  border: 1px solid #e0d0e0;
+  border-radius: 20px;
+  color: #ad7da0;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.favorite-add-btn:hover {
+  background-color: #e5d5e5;
+}
+
+.favorite-combinations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.favorite-item {
+  padding: 6px 12px;
+  background-color: #f9f5f8;
+  border: 1px solid #f0e6ed;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.favorite-item:hover {
+  background-color: #f0e6ed;
+}
+
+.remove-favorite {
+  color: #ad7da0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
 /* Premium Feature Styles */
 .premium-feature {
   background-color: #f9f5f8;
@@ -103,6 +154,37 @@ textarea {
 .remaining-count {
   font-size: 14px;
   color: #666;
+}
+
+/* Tooltip Styles */
+.tone-style-container {
+  position: relative;
+  width: 100%;
+}
+
+.tooltip {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #333;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 100;
+  display: none;
+  width: 200px;
+  margin-top: 5px;
+}
+
+.tooltip:after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 10px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #333 transparent;
 }
 
 /* Button Styles */
@@ -179,6 +261,28 @@ textarea {
   gap: 10px;
 }
 
+.feedback-text {
+  width: 100%;
+  min-height: 60px;
+  padding: 8px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  font-size: 14px;
+}
+
+.submit-feedback-btn {
+  padding: 6px 12px;
+  background-color: #ad7da0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
 .vote-btn, .copy-btn {
   padding: 8px 15px;
   background-color: #f0f0f0;
@@ -238,6 +342,20 @@ textarea {
   margin-bottom: 10px;
   font-size: 14px;
   color: #666;
+}
+
+.delete-history-btn {
+  padding: 3px 8px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #666;
+}
+
+.delete-history-btn:hover {
+  background-color: #e5e5e5;
 }
 
 .history-item-content {
